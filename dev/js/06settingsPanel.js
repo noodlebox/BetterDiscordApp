@@ -47,20 +47,28 @@ SettingsPanel.prototype.init = function () {
 
     if (settingsCookie["bda-es-6"]) {
         //Pretty emote titles
-        emoteNamePopup = $("<div class='tipsy tipsy-se' style='display: block; top: 82px; left: 1630.5px; visibility: visible; opacity: 0.8;'><div class='tipsy-inner'></div></div>");
-        $(document).on("mouseover", ".emote", function () {
-            var x = $(this).offset();
-            var title = $(this).attr("alt");
-            $(emoteNamePopup).find(".tipsy-inner").text(title);
-            $(emoteNamePopup).css('left', x.left - 25);
-            $(emoteNamePopup).css('top', x.top - 37);
-            $(".app").append($(emoteNamePopup));
+        $(document).on("mouseenter.fancyTooltip", ".emote", function () {
+            // Create and insert tooltip
+            var emote = $(this);
+            var title = emote.attr("alt");
+            var tooltip = $("<div>").append(title).addClass("tooltip tooltip-top tooltip-normal bd-tooltip");
+            $(".tooltips").append(tooltip);
+
+            // Position the tooltip
+            var position = emote.offset();
+            position.top -= 30;
+            position.left += emote.width()/2 - tooltip.width()/2 - 10;
+            tooltip.offset(position);
         });
-        $(document).on("mouseleave", ".emote", function () {
-            $(".tipsy").remove();
+
+        // Set a handler to destroy the tooltip
+        $(document).on("mouseleave.fancyTooltip", ".emote", function () {
+            $(".bd-tooltip").remove();
         });
     } else {
-        $(document).off('mouseover', '.emote');
+        $(document).off("mouseenter.fancyTooltip", ".emote");
+        $(document).off("mouseleave.fancyTooltip", ".emote");
+        $(".bd-tooltip").remove();
     }
     
     if(settingsCookie["bda-gs-8"]) {
@@ -166,21 +174,29 @@ SettingsPanel.prototype.updateSettings = function() {
     }
     if (settingsCookie["bda-es-6"]) {
         //Pretty emote titles
-        emoteNamePopup = $("<div class='tipsy tipsy-se' style='display: block; top: 82px; left: 1630.5px; visibility: visible; opacity: 0.8;'><div class='tipsy-inner'></div></div>");
-        $(document).on("mouseover", ".emote", function () {
-            var x = $(this).offset();
-            var title = $(this).attr("alt");
-            $(emoteNamePopup).find(".tipsy-inner").text(title);
-            $(emoteNamePopup).css('left', x.left - 25);
-            $(emoteNamePopup).css('top', x.top - 32);
-            $("div[data-reactid='.0.1.1']").append($(emoteNamePopup));
+        $(document).on("mouseenter.fancyTooltip", ".emote", function () {
+            // Create and insert tooltip
+            var emote = $(this);
+            var title = emote.attr("alt");
+            var tooltip = $("<div>").append(title).addClass("tooltip tooltip-top tooltip-normal bd-tooltip");
+            $(".tooltips").append(tooltip);
+
+            // Position the tooltip
+            var position = emote.offset();
+            position.top -= 30;
+            position.left += emote.width()/2 - tooltip.width()/2 - 10;
+            tooltip.offset(position);
         });
-        $(document).on("mouseleave", ".emote", function () {
-            $(".tipsy").remove();
+
+        // Set a handler to destroy the tooltip
+        $(document).on("mouseleave.fancyTooltip", ".emote", function () {
+            $(".bd-tooltip").remove();
         });
     } else {
-        $(document).off('mouseover', '.emote');
-    } 
+        $(document).off("mouseenter.fancyTooltip", ".emote");
+        $(document).off("mouseleave.fancyTooltip", ".emote");
+        $(".bd-tooltip").remove();
+    }
 
     if(settingsCookie["bda-gs-8"]) {
         dMode.enable();
